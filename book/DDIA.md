@@ -5,8 +5,6 @@
 
 ## Chapter 2,Data Models and Query Languages
 
-* 
-
 * ORM的定位是什么，它是不是一个尴尬的技术呢？
 
 * ActiveRecord的核心思想是什么？
