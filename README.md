@@ -2,11 +2,11 @@
 
 >我们采集的只是石头，却必须时刻展望未来的大教堂。
 
-文章
-* 20180911,[实习之后](./2018/20180911_after_my_practice_in_tencent.md)
-* 20180912,[InnoDB锁机制与事务模型](./2018/20180912_innodb_locking_and_transaction_model.md)
+每隔一阵子，总觉得需要有一个完全可控的个人站点。不是github pages，也不是word press，需要支持深度定制开发。
 
+反复思量后，还是把个人站点的开发列上日程。暂定要支持的功能有：
 
-
-读书笔记
- * [Designing Data-Intensive Applications](./book/DDIA.md)
+* 汉语版+英语版
+* 简洁的前端页面
+* 完善的数据统计
+* 好的评论系统，考虑使用DISQUS
