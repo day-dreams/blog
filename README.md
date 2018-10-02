@@ -10,3 +10,9 @@
 
 读书笔记
  * [Designing Data-Intensive Applications](./book/DDIA.md)
+
+
+TODO
+* Web Api的常见分页方案，结合淘宝、知乎、b站的技术方案
+* Cookie的由来、当前应用方式，结合RPC和一些常见的Web站点
+* Linux内核中，(UDP包,SOCK)的映射策略
