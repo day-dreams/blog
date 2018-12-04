@@ -8,6 +8,8 @@
 * 20181002,[什么是cookie](./2018/20181002_what_is_cookie.md)
 * 20181025,[vim技巧摘录](./2018/20181025_vim_skills.md)
 * 20181117,[我们为什么要旅行](./2018/20181105_why_we_travel.md)
+* 20181203,[PHP5 tips摘录](./2018/20181203_detail_about_php5.md)
+
 
 读书笔记
  * [Designing Data-Intensive Applications](./book/DDIA.md)
