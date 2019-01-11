@@ -13,7 +13,7 @@
 
 读书笔记
  * [Designing Data-Intensive Applications](./book/DDIA.md)
-
+ * [](./book/)
 冷知识
 *  [2018](./trivia/2018.md)
 
