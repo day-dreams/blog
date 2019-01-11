@@ -13,10 +13,13 @@
 
 读书笔记
  * [Designing Data-Intensive Applications](./book/DDIA.md)
- * [](./book/)
-冷知识
-*  [2018](./trivia/2018.md)
+ * [High Performance Spark](./book/HighPerformanceSpark.md)
 
+没什么用的知识
+  *  [2018](./trivia/2018.md)
+
+其他
+  * [我的PHP7最佳实践](./common/my-php-best-practice.md)
 
 
 TODO
