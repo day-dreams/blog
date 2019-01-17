@@ -15,6 +15,9 @@
  * [Designing Data-Intensive Applications](./book/DDIA.md)
  * [High Performance Spark](./book/HighPerformanceSpark.md)
 
+源码剖析
+  * [Yii2](./code-analyze/yii2.md)
+
 没什么用的知识
   *  [2018](./trivia/2018.md)
 
@@ -26,3 +29,4 @@ TODO
 * Web Api的常见分页方案，结合淘宝、知乎、b站的技术方案
 * Linux内核中，(UDP包,SOCK)的映射策略
 * 跨域、jsonp
+* yii2框架中，app初始化时，components的初始化细节
