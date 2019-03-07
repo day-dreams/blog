@@ -1,28 +1,29 @@
 <!DOCTYPE html>
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
         <title>Web站点：小HTML+大JS模式的思考</title>
-        <link rel="stylesheet" href="./Web站点：小HTML+大JS模式的思考_files/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
-        <link rel="stylesheet" href="./Web站点：小HTML+大JS模式的思考_files/markdown.css">
-        <link rel="stylesheet" href="./Web站点：小HTML+大JS模式的思考_files/highlight.css">
-        <link href="./Web站点：小HTML+大JS模式的思考_files/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
         <style>
 .task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
 </style>
         <style>
             body {
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
-                font-size: 14px;
+                font-size: 18px;
                 line-height: 1.6;
             }
         </style>
         
-        <script src="./Web站点：小HTML+大JS模式的思考_files/katex-copytex.min.js.下载"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
     </head>
     <body>
-        <h1 id="web%E7%AB%99%E7%82%B9%E5%B0%8Fhtml%E5%A4%A7js%E6%A8%A1%E5%BC%8F%E7%9A%84%E6%80%9D%E8%80%83">Web站点：小HTML+大JS模式的思考</h1>
+        <h1 id="web站点小html大js模式的思考">Web站点：小HTML+大JS模式的思考</h1>
 <p>最近老想着前后端的事情，对首页的资源加载比较好奇。有人说：现在的web都是小HTML+大JS的形式，首页负责引用js文件，由js做好后续的资源请求，这样首页HTML几乎保持为静态资源。可是发现流行的几个站点，似乎都不遵循这个规则：它们的首页HTML包含许多动态资源，似乎服务器端做了一些数据填充工作，然后再传给的浏览器。所以想比较下几个站点的首页资源加载模式，顺便分析一下首页HTML的生成技术。</p>
-<h2 id="%E5%89%8D%E8%A8%80">前言</h2>
+<h2 id="前言">前言</h2>
 <p>本文的术语规范：</p>
 <ul>
 <li><code>web站点</code>：在浏览器里访问的页面，形如<code>v.qq.com</code>、<code>github.com</code></li>
@@ -42,25 +43,25 @@
 </ul>
 <p>这两次请求的语义很好理解，但它们返回内容格式不是json，而是HTML。说明这两个请求背后还有<code>HTML生成</code>环节。</p>
 <p>可见，Github比较依赖<code>HTML生成</code>。</p>
-<h2 id="%E8%85%BE%E8%AE%AF%E8%A7%86%E9%A2%91">腾讯视频</h2>
+<h2 id="腾讯视频">腾讯视频</h2>
 <p>腾讯视频也非常依赖<code>HTML生成</code>，首页加载过程大体是<code>大动态HTML</code>+<code>静态资源</code>+<code>API请求</code>。</p>
 <p>它的首页非常庞大，包含许多动态内容，命令行里<code>curl</code>拿到的首页HTLML有700k大小，并且多次请求拿到的首页不同，差异在于含有不同的时间戳。除了时间戳，更多的动态内容是视频列表，包括视频的标题、访问url、封面等。</p>
 <p>API请求非常多，但是比较小，大多都是数据上报和心跳检测。</p>
-<h2 id="%E7%9F%A5%E4%B9%8E">知乎</h2>
-<p>知乎需要登陆后才能进入首页，<a href="http://xn--zhihu-zh6hx30aht0a70h61jk86a.com/">因此直接分析zhihu.com</a>。知乎类似于腾讯视频，都是大动态类型的HTML，事实上观察到很多站点都是这样，比如美团技术博客。</p>
-<h2 id="%E6%B7%98%E5%AE%9D">淘宝</h2>
+<h2 id="知乎">知乎</h2>
+<p>知乎类似于腾讯视频，都是大动态类型的HTML，事实上观察到很多站点都是这样，比如美团技术博客。</p>
+<h2 id="淘宝">淘宝</h2>
 <p>淘宝属于<code>小动态HTML</code>+<code>静态资源</code>+<code>API请求</code>。</p>
 <p>它的首页HTML大小规模中等，不到200K。含有非常少的动态资源，两次curl下来，diff后发现只有三处不同：一条推荐商品和几个id。单论首页HTML，它的结构复杂度较小。</p>
 <p>可是它有很多API请求，一部分是心跳和上报，一部分是拉去商品列表。</p>
-<h2 id="%E5%A4%A7%E5%8A%A8%E6%80%81html%E4%B8%8E%E5%B0%8F%E5%8A%A8%E6%80%81html%E7%9A%84%E8%80%83%E9%87%8F">大动态HTML与小动态HTML的考量</h2>
+<h2 id="大动态html与小动态html的考量">大动态HTML与小动态HTML的考量</h2>
 <p>经过几番对比，认为它们的抉择受到业务复杂度和遗留因素的影响，很难说那个好。</p>
 <p>腾讯视频、淘宝、知乎的首页HTML结构都比较复杂，特别是淘宝。但他们都选择了大动态HTML，在复杂度隔离上可能不如小动态HTML。</p>
 <p>Github感觉做的比较好，采用小动态HTML，复杂度不高，并且把最近活动、feed流处理成单独的HTML，经过请求来加载到首页。这样可以进行充分隔离，保持大体结构不易变。</p>
-<h2 id="%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E5%8A%A8%E6%80%81html%E7%94%9F%E6%88%90">如何进行动态HTML生成</h2>
+<h2 id="如何进行动态html生成">如何进行动态HTML生成</h2>
 <p>很多web编程语言都有模板渲染功能，像Golang的template包、PHP\Yii2里的render方法，都可以动态生成html。</p>
-<h2 id="%E7%BB%93%E8%AE%BA">结论</h2>
+<h2 id="结论">结论</h2>
 <p>现在可以理解，所谓的大动态、小动态HTML背后并没有什么复杂的业务逻辑，不过是调一下方法，就是编程时的一个小小细节，并不值得上升到技术选型这种层面来讨论。</p>
 <p>至于前言里的那个小HTML大JS的说法，也就不难解释了：现在讲究前后端分离，后端程序员几乎不需要处理HTML，只用提供API，而前端程序员更习惯用js来写他们业务逻辑，所以会形成这种小HTML大JS的现象；如果放到以前，那个前端程序员还没出现的年代，web站点内容比较匮乏，js还没有大行其道，应该就是后端负责渲染HTML模板，生成大规模的动态HTML。</p>
 
-    
-    </body></html>
+    </body>
+    </html>
