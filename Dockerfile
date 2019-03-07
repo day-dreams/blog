@@ -1,11 +1,15 @@
 FROM ubuntu:16.04
 
-RUN apt update && apt upgrade -y && apt install nginx
+RUN apt update && apt upgrade -y && apt install nginx tcpdump curl -y  
 
-ENV APP_DIR "/root/blog.zhangnan.xyz"
+ENV APP_DIR "/root/www/blog.zhangnan.xyz"
 
 ADD . ${APP_DIR}
 
-RUN cd ${APP_DIR} && cp blog.zhangnan.xyz.conf /etc/nignx/conf.d/blog.zhangnan.xyz.conf && service nginx restart
+RUN mkdir /root/blog.zhangnan.xyz
+
+RUN cd ${APP_DIR} && ls && cp blog.zhangnan.xyz.conf /etc/nginx/conf.d/
+
+ENTRYPOINT   tail -f /dev/null
 
 EXPOSE 80
