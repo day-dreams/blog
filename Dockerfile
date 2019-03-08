@@ -13,3 +13,4 @@ RUN cd ${APP_DIR} &&  \
 ENTRYPOINT service nginx restart &&  tail -f /dev/null
 
 EXPOSE 80
+
